@@ -1,4 +1,6 @@
 class Vehicle {
+  make;
+  model;
   constructor(make, model) {
     this.make = make;
     this.model = model;
@@ -6,6 +8,7 @@ class Vehicle {
 }
 
 class Car extends Vehicle {
+  year;
   constructor(make, model, year) {
     super(make, model);
     this.year = year;
@@ -40,6 +43,10 @@ class Car extends Vehicle {
 }
 
 class Person {
+  name;
+  surname;
+  age;
+  gender;
   constructor(name, surname, age, gender, cars = []) {
     this.name = name;
     this.surname = surname;
