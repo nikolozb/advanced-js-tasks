@@ -1,5 +1,3 @@
-"use strict";
-
 function Car(make, model, year) {
   this.make = make;
   this.model = model;
@@ -15,9 +13,7 @@ function Car(make, model, year) {
   };
 
   this.removeOwner = function (owner) {
-    return this.owners.filter((el) => {
-      return el !== owner;
-    });
+    this.owners = this.owners.filter((old) => old !== owner);
   };
 
   this.getOwnersCount = function () {
@@ -25,9 +21,7 @@ function Car(make, model, year) {
   };
 
   this.getOwnerNames = function () {
-    return this.owners.map((el) => {
-      return el;
-    });
+    return this.owners.map((owner) => owner.fullName());
   };
 
   this.getFullInfo = function () {
@@ -45,7 +39,7 @@ function Person(name, surname, age, gender, cars = []) {
   this.cars = cars;
 
   this.fullName = function () {
-    return `${this.name} ${surname}`;
+    return `${this.name} ${this.surname}`;
   };
 
   this.countCars = function () {
@@ -54,14 +48,14 @@ function Person(name, surname, age, gender, cars = []) {
 
   this.buysCar = function (car) {
     this.cars.push(car);
-    car.addOwner(this.fullName());
+    car.addOwner(this);
   };
 
   this.sellsCar = function (car) {
     this.cars.filter((el) => {
       return car !== el;
     });
-    car.removeOwner(this.fullName());
+    car.removeOwner(this);
   };
 
   this.getAllCarsInfo = function () {
