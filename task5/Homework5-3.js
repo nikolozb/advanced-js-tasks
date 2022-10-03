@@ -6,13 +6,11 @@ const usersDB = {
   "user3@hw.js": [],
 };
 
-// function displayError(errorMessage) {
-//   console.error(new Error(errorMessage));
-// }
+function displayError(errorMessage) {
+  console.error(new Error(errorMessage));
+}
 
 function loginUser(email, password) {
-  // const obj = ; // userEmail: "user1@hw.js"
-
   return new Promise((resolve, reject) => {
     if (Object.keys(usersDB).includes(email)) {
       setTimeout(() => {
@@ -20,20 +18,23 @@ function loginUser(email, password) {
         resolve({ userEmail: email });
       }, 3000);
     } else {
-      reject("User not found!");
+      setTimeout(() => {
+        reject("User not found");
+      }, 3000);
     }
   });
 }
 
 function getUserVideos(email) {
   return new Promise((resolve, reject) => {
-    if (usersDB[email].length > 0) {
+    if (usersDB[email].length !== 0) {
       setTimeout(() => {
-        // console.log(usersDB[email]);
         resolve(usersDB[email]);
       }, 2000);
     } else {
-      reject("Videos not found!");
+      setTimeout(() => {
+        reject("Videos not found");
+      }, 2000);
     }
   });
 }
@@ -45,7 +46,9 @@ function videoDetails(video) {
         resolve(video.title);
       }, 2000);
     } else {
-      reject("Video Title not found!");
+      setTimeout(() => {
+        reject("Video title not found");
+      }, 2000);
     }
   });
 }
@@ -53,18 +56,17 @@ function videoDetails(video) {
 const getPassedUsersFirstVideoTitle = (user) => {
   loginUser(user, 1234)
     .then((obj) => {
-      // console.log(usersDB[obj.userEmail]);
-      getUserVideos(obj.userEmail);
+      console.log("user:", obj.userEmail);
+      return getUserVideos(obj.userEmail);
     })
     .then((videosObj) => {
-      console.log(videosObj);
-      console.log(videosObj);
-      videoDetails(videosObj[0]);
+      console.log("videos:", videosObj);
+      return videoDetails(videosObj[0]);
     })
-    .then((title) => console.log(title));
-  // .catch((err) => {
-  //   displayError(err);
-  // });
+    .then((title) => console.log("title:", title))
+    .catch((err) => {
+      displayError(err);
+    });
 };
 
 getPassedUsersFirstVideoTitle("user1@hw.js");
